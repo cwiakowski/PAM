@@ -13,18 +13,17 @@ import com.squareup.picasso.Picasso;
 import java.io.File;
 import java.util.List;
 
+//Adapter that controls SlideShowFragment
 public class SlideShowPagerAdapter extends PagerAdapter {
 
-    Context mContext;
-    //Layout inflater
-    LayoutInflater mLayoutInflater;
-    //list of Gallery Items
-    List<GalleryItem> galleryItems;
+    private Context mContext;
+
+    private LayoutInflater mLayoutInflater;
+    private List<GalleryItem> galleryItems;
 
     public SlideShowPagerAdapter(Context context, List<GalleryItem> galleryItems) {
         mContext = context;
         mLayoutInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        //set galleryItems
         this.galleryItems = galleryItems;
     }
 
@@ -42,8 +41,8 @@ public class SlideShowPagerAdapter extends PagerAdapter {
     public Object instantiateItem(ViewGroup container, int position) {
         View itemView = mLayoutInflater.inflate(R.layout.pager_item, container, false);
         ImageView imageView = (ImageView) itemView.findViewById(R.id.imageViewThumbnail);
-        //load current image in viewpager
-        Picasso.get().load(new File(galleryItems.get(position).imageUri)).fit().centerInside().into(imageView);
+        //Injecting picture into Fragment's ImageView
+        Picasso.get().load(new File(galleryItems.get(position).getImageUri())).fit().centerInside().into(imageView);
         container.addView(itemView);
         return itemView;
     }

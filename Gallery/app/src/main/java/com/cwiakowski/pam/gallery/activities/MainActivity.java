@@ -21,47 +21,42 @@ import com.cwiakowski.pam.gallery.utilities.GalleryUtils;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements GalleryAdapter.GalleryAdapterCallBacks {
-    //Deceleration of list of  GalleryItems
-    public List<GalleryItem> galleryItems;
-    //Read storage permission request code
+
+    //List of pictures
+    private List<GalleryItem> galleryItems;
     private static final int RC_READ_STORAGE = 5;
-    GalleryAdapter mGalleryAdapter;
+    //Adapter that maneges pictures
+    private GalleryAdapter mGalleryAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
-        //setup RecyclerView
+        //Initialization of RecyclerView
         RecyclerView recyclerViewGallery = (RecyclerView) findViewById(R.id.recyclerViewGallery);
         recyclerViewGallery.setLayoutManager(new GridLayoutManager(this, 2));
-        //Create RecyclerView Adapter
+
+        //Initialization of GalleryAdapter
         mGalleryAdapter = new GalleryAdapter(this);
-        //set adapter to RecyclerView
         recyclerViewGallery.setAdapter(mGalleryAdapter);
-        //check for read storage permission
+
+        //Checking if app have permission to read storage data, optionally asking for permission
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-            //Get images
             galleryItems = GalleryUtils.getImages(this);
-            // add images to gallery recyclerview using adapter
             mGalleryAdapter.addGalleryItems(galleryItems);
         } else {
-            //request permission
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, RC_READ_STORAGE);
         }
 
 
     }
 
-
+    //Opens up a Fragment when thumbnail is clicked
     @Override
     public void onItemSelected(int position) {
-        //create fullscreen SlideShowFragment dialog
         SlideShowFragment slideShowFragment = SlideShowFragment.newInstance(position);
-        //setUp style for slide show fragment
         slideShowFragment.setStyle(DialogFragment.STYLE_NORMAL, R.style.DialogFragmentTheme);
-//        finally show dialogue
         slideShowFragment.show(getSupportFragmentManager(), null);
     }
 
@@ -70,13 +65,15 @@ public class MainActivity extends AppCompatActivity implements GalleryAdapter.Ga
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == RC_READ_STORAGE) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                //Get images
+                //Reads data when permission is granted
                 galleryItems = GalleryUtils.getImages(this);
-                // add images to gallery recyclerview using adapter
                 mGalleryAdapter.addGalleryItems(galleryItems);
             } else {
                 Toast.makeText(this, "Storage Permission denied", Toast.LENGTH_SHORT).show();
             }
         }
+    }
+    public List<GalleryItem> getGalleryItems() {
+        return galleryItems;
     }
 }

@@ -10,30 +10,34 @@ import com.cwiakowski.pam.gallery.entity.GalleryItem;
 import java.util.ArrayList;
 import java.util.List;
 
+//Class containing utilities to get pictures from File
 public class GalleryUtils {
 
-    //Define bucket name from which you want to take images Example '/DCIM/Camera' for camera images
-    public static final String CAMERA_IMAGE_BUCKET_NAME = Environment.getExternalStorageDirectory().toString() + "/Download";
+    //File path to folder with pictures
+    private static final String CAMERA_IMAGE_BUCKET_NAME = Environment.getExternalStorageDirectory().toString() + "/Download";
 
-    //method to get id of image bucket from path
     public static String getBucketId(String path) {
         return String.valueOf(path.toLowerCase().hashCode());
     }
 
-    //method to get images
+    //Returning list of pictures
     public static List<GalleryItem> getImages(Context context) {
+        //Setting up data to save, DISPLAY_NAME is not used at this point
         final String[] projection = {MediaStore.Images.Media.DISPLAY_NAME, MediaStore.Images.Media.DATA};
         final String selection = MediaStore.Images.Media.BUCKET_ID + " = ?";
         final String[] selectionArgs = {GalleryUtils.getBucketId(CAMERA_IMAGE_BUCKET_NAME)};
+        //Setting up tool to extract data from file
         final Cursor cursor = context.getContentResolver().query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
                 projection,
                 selection,
                 selectionArgs,
                 null);
+        //Initialization of ArrayList containing pictures
         ArrayList<GalleryItem> result = new ArrayList<GalleryItem>(cursor.getCount());
+        //Saving data in ArrayList
         if (cursor.moveToFirst()) {
             final int dataColumn = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-            final int nameColumn = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DISPLAY_NAME);
+            //final int nameColumn = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DISPLAY_NAME);
             do {
                 GalleryItem galleryItem = new GalleryItem(cursor.getString(dataColumn));
                 result.add(galleryItem);
