@@ -1,4 +1,4 @@
-package com.cwiakowski.pam.gallery;
+package com.cwiakowski.pam.gallery.adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -7,6 +7,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.cwiakowski.pam.gallery.R;
+import com.cwiakowski.pam.gallery.entity.GalleryItem;
+import com.cwiakowski.pam.gallery.utilities.ScreenUtils;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;

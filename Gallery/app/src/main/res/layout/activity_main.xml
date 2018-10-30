@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:scrollbars="vertical"
-    tools:context="com.cwiakowski.pam.gallery.MainActivity"
+    tools:context="com.cwiakowski.pam.gallery.activities.MainActivity"
     tools:showIn="@layout/activity_main">
 
 

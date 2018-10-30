@@ -1,9 +1,11 @@
-package com.cwiakowski.pam.gallery;
+package com.cwiakowski.pam.gallery.utilities;
 
 import android.content.Context;
 import android.database.Cursor;
 import android.os.Environment;
 import android.provider.MediaStore;
+
+import com.cwiakowski.pam.gallery.entity.GalleryItem;
 
 import java.util.ArrayList;
 import java.util.List;

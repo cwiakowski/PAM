@@ -1,4 +1,4 @@
-package com.cwiakowski.pam.gallery;
+package com.cwiakowski.pam.gallery.utilities;
 
 import android.app.Activity;
 import android.content.Context;

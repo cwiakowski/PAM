@@ -1,0 +1,38 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.cwiakowski.pam.gallery.SlideShowFragment"
+    android:background="#000000">
+
+    <!--Viewpager to show slideshow of images-->
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewPagerGallery"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+
+    </android.support.v4.view.ViewPager>
+    <!--Image name textview-->
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="70dp"
+        android:layout_marginBottom="20dp"
+        android:text="prev" />
+
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="70dp"
+        android:layout_marginBottom="20dp"
+        android:text="next" />
+
+</RelativeLayout>

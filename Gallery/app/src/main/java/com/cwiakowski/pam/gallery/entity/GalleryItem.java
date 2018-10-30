@@ -1,4 +1,4 @@
-package com.cwiakowski.pam.gallery;
+package com.cwiakowski.pam.gallery.entity;
 
 public class GalleryItem {
     public String imageUri;
