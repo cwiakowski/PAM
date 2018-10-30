@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.cwiakowski.pam.gallery.activities.MainActivity;
@@ -62,6 +63,8 @@ public class SlideShowFragment extends DialogFragment {
 
     }
 
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -102,7 +105,27 @@ public class SlideShowFragment extends DialogFragment {
 
             }
         });
+
+        Button prev = (Button) view.findViewById(R.id.button2);
+        Button next = (Button) view.findViewById(R.id.button3);
+        prev.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mViewPagerGallery.setCurrentItem(mViewPagerGallery.getCurrentItem()-1);
+                //mCurrentPosition--;
+            }
+        });
+        next.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                mViewPagerGallery.setCurrentItem(mViewPagerGallery.getCurrentItem() +1);
+                //mCurrentPosition++;
+            }
+        });
+
         return view;
     }
+
 
 }
