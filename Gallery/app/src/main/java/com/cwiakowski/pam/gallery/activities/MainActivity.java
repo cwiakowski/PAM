@@ -9,7 +9,11 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cwiakowski.pam.gallery.SlideShowFragment;
@@ -17,6 +21,9 @@ import com.cwiakowski.pam.gallery.adapters.GalleryAdapter;
 import com.cwiakowski.pam.gallery.R;
 import com.cwiakowski.pam.gallery.entity.GalleryItem;
 import com.cwiakowski.pam.gallery.utilities.GalleryUtils;
+import com.cwiakowski.pam.gallery.utilities.ScreenUtils;
+
+import org.w3c.dom.Text;
 
 import java.util.List;
 
@@ -27,19 +34,64 @@ public class MainActivity extends AppCompatActivity implements GalleryAdapter.Ga
     private static final int RC_READ_STORAGE = 5;
     //Adapter that maneges pictures
     private GalleryAdapter mGalleryAdapter;
+    private GridLayoutManager gridLayoutManager;
+
+
+    private void allignThumbnails() {
+        gridLayoutManager.getSpanCount();
+    }
+
+    //Returns offset from first visible picture
+    private int offset(RecyclerView recyclerView) {
+        int offset = recyclerView.computeVerticalScrollOffset();
+        offset = offset % 540;
+        return offset;
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
         //Initialization of RecyclerView
         RecyclerView recyclerViewGallery = (RecyclerView) findViewById(R.id.recyclerViewGallery);
-        recyclerViewGallery.setLayoutManager(new GridLayoutManager(this, 2));
+        //Initialization of Layout Manager
+        gridLayoutManager = new GridLayoutManager(this, 2);
+        recyclerViewGallery.setLayoutManager(gridLayoutManager);
 
         //Initialization of GalleryAdapter
         mGalleryAdapter = new GalleryAdapter(this);
         recyclerViewGallery.setAdapter(mGalleryAdapter);
+
+        recyclerViewGallery.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                if (newState == 0) {
+                    int offset = offset(recyclerView);
+                    if (offset < 270) {
+                        //Scroll up
+                        gridLayoutManager.scrollToPosition(gridLayoutManager.findFirstVisibleItemPosition());
+                    }
+                    else {
+                        //Scroll down
+                        recyclerView.scrollBy(0, 540 - offset);
+                        gridLayoutManager.scrollToPosition(gridLayoutManager.findFirstVisibleItemPosition());
+                    }
+
+                }
+
+            }
+
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+
+
+            }
+        });
 
         //Checking if app have permission to read storage data, optionally asking for permission
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
