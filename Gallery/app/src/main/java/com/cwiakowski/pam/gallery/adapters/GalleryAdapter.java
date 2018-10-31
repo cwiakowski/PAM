@@ -19,6 +19,7 @@ import java.util.List;
 public class GalleryAdapter extends RecyclerView.Adapter {
     //List of pictures
     private List<GalleryItem> galleryItems;
+
     private Context context;
     //Allows for communication with MainActiivity
     private GalleryAdapterCallBacks mAdapterCallBacks;

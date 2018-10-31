@@ -72,16 +72,7 @@ public class MainActivity extends AppCompatActivity implements GalleryAdapter.Ga
                         recyclerView.scrollBy(0, 540 - offset);
                         gridLayoutManager.scrollToPosition(gridLayoutManager.findFirstVisibleItemPosition());
                     }
-
                 }
-
-            }
-
-            @Override
-            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-
-
             }
         });
 
