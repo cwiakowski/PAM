@@ -1,4 +1,4 @@
-package com.cwiakowski.pam.gallery.layouts;
+package com.cwiakowski.pam.gallery.view.layouts;
 
 import android.annotation.TargetApi;
 import android.content.Context;

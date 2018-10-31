@@ -1,4 +1,4 @@
-package com.cwiakowski.pam.gallery;
+package com.cwiakowski.pam.gallery.view;
 
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
@@ -8,7 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import com.cwiakowski.pam.gallery.activities.MainActivity;
+import com.cwiakowski.pam.gallery.R;
+import com.cwiakowski.pam.gallery.adapters.SlideShowPagerAdapter;
 import com.cwiakowski.pam.gallery.entity.GalleryItem;
 
 import java.util.ArrayList;

@@ -1,4 +1,4 @@
-package com.cwiakowski.pam.gallery.activities;
+package com.cwiakowski.pam.gallery.view;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
@@ -9,21 +9,13 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.cwiakowski.pam.gallery.SlideShowFragment;
 import com.cwiakowski.pam.gallery.adapters.GalleryAdapter;
 import com.cwiakowski.pam.gallery.R;
 import com.cwiakowski.pam.gallery.entity.GalleryItem;
 import com.cwiakowski.pam.gallery.utilities.GalleryUtils;
-import com.cwiakowski.pam.gallery.utilities.ScreenUtils;
-
-import org.w3c.dom.Text;
 
 import java.util.List;
 

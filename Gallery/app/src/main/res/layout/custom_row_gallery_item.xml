@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.cwiakowski.pam.gallery.layouts.SquareLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.cwiakowski.pam.gallery.view.layouts.SquareLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -9,4 +9,4 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:scaleType="centerCrop" />
-</com.cwiakowski.pam.gallery.layouts.SquareLayout>
+</com.cwiakowski.pam.gallery.view.layouts.SquareLayout>
