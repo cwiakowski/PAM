@@ -65,12 +65,11 @@ public class MainActivity extends AppCompatActivity implements GalleryAdapter.Ga
                     int offset = offset(recyclerView);
                     if (offset < 270) {
                         //Scroll up
-                        gridLayoutManager.scrollToPosition(gridLayoutManager.findFirstVisibleItemPosition());
+                        recyclerView.smoothScrollBy(0, -offset);
                     }
                     else {
                         //Scroll down
-                        recyclerView.scrollBy(0, 540 - offset);
-                        gridLayoutManager.scrollToPosition(gridLayoutManager.findFirstVisibleItemPosition());
+                        recyclerView.smoothScrollBy(0, 540-offset);
                     }
                 }
             }
