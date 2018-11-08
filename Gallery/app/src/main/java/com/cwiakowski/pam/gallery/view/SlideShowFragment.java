@@ -1,8 +1,10 @@
 package com.cwiakowski.pam.gallery.view;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -62,6 +64,12 @@ public class SlideShowFragment extends DialogFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_slide_show, container, false);
+
+        //Setting up the toolbar
+        android.support.v7.widget.Toolbar toolbar = (Toolbar) view.findViewById(R.id.ToolBar);
+        toolbar.setTitle("Gallery");
+        toolbar.setTitleTextColor(Color.WHITE);
+
         mViewPagerGallery = view.findViewById(R.id.viewPagerGallery);
         //Initialization of SlideShowPagerAdapter
         mSlideShowPagerAdapter = new SlideShowPagerAdapter(getContext(), galleryItems);
