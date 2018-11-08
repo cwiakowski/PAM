@@ -6,7 +6,7 @@ import android.os.Build;
 import android.util.AttributeSet;
 import android.widget.RelativeLayout;
 
-//Laout that will contain pic's thumbnails
+//Layout that will contain pic's thumbnails
 public class SquareLayout extends RelativeLayout {
 
     public SquareLayout(Context context) {
