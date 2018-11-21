@@ -1,4 +1,4 @@
-package com.cwiakowski.puzzle;
+package com.cwiakowski.puzzle.controllers;
 
 import android.view.MotionEvent;
 import android.view.View;

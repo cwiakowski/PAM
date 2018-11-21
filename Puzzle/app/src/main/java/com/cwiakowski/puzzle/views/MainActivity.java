@@ -1,14 +1,16 @@
-package com.cwiakowski.puzzle;
+package com.cwiakowski.puzzle.views;
 
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+
+import com.cwiakowski.puzzle.R;
+import com.cwiakowski.puzzle.controllers.TouchListener;
 
 import java.util.ArrayList;
 
