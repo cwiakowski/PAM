@@ -2,24 +2,27 @@ package com.cwiakowski.puzzle.controllers;
 
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
 import com.cwiakowski.puzzle.entities.PuzzlePiece;
+import com.cwiakowski.puzzle.views.PuzzleActivity;
 
 import static java.lang.Math.abs;
-import static java.lang.Math.pow;
-import static java.lang.Math.sqrt;
 
 public class TouchListener implements View.OnTouchListener {
     private float xDelta;
     private float yDelta;
+    private PuzzleActivity activity;
+
+    public TouchListener(PuzzleActivity activity) {
+        this.activity = activity;
+    }
 
     @Override
     public boolean onTouch(View view, MotionEvent motionEvent) {
         float x = motionEvent.getRawX();
         float y = motionEvent.getRawY();
-        final double tolerance = sqrt(pow(view.getWidth(), 2) + pow(view.getHeight(), 2)) / 10;
+        final double maxOffset = 40;
 
         PuzzlePiece piece = (PuzzlePiece) view;
         if (!piece.canMove) {
@@ -39,14 +42,22 @@ public class TouchListener implements View.OnTouchListener {
                 view.setLayoutParams(lParams);
                 break;
             case MotionEvent.ACTION_UP:
-                int xDiff = abs(piece.xCoord - lParams.leftMargin);
-                int yDiff = abs(piece.yCoord - lParams.topMargin);
-                if (xDiff <= tolerance && yDiff <= tolerance) {
-                    lParams.leftMargin = piece.xCoord;
-                    lParams.topMargin = piece.yCoord;
+                int offsetX = StrictMath.abs(piece.targetX - lParams.leftMargin);
+                int offsetY = StrictMath.abs(piece.targetY - lParams.topMargin);
+                if (offsetX <= maxOffset && offsetY <= maxOffset) {
+                    lParams.leftMargin = piece.targetX;
+                    lParams.topMargin = piece.targetY;
                     piece.setLayoutParams(lParams);
                     piece.canMove = false;
-                    sendViewToBack(piece);
+                    activity.checkGameOver();
+                }
+                else if (lParams.topMargin > 1050){
+                    piece.startingX = lParams.leftMargin;
+                    piece.startingY = lParams.topMargin;
+                } else {
+                    lParams.leftMargin = piece.startingX;
+                    lParams.topMargin = piece.startingY;
+                    view.setLayoutParams(lParams);
                 }
                 break;
         }
@@ -54,11 +65,4 @@ public class TouchListener implements View.OnTouchListener {
         return true;
     }
 
-    public void sendViewToBack(final View child) {
-        final ViewGroup parent = (ViewGroup)child.getParent();
-        if (null != parent) {
-            parent.removeView(child);
-            parent.addView(child, 0);
-        }
-    }
 }
