@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.Toast;
+import android.widget.Toolbar;
 
 import com.cwiakowski.pam.gallery.adapters.GalleryAdapter;
 import com.cwiakowski.pam.gallery.R;
@@ -57,6 +58,7 @@ public class MainActivity extends AppCompatActivity implements GalleryAdapter.Ga
         mGalleryAdapter = new GalleryAdapter(this);
         recyclerViewGallery.setAdapter(mGalleryAdapter);
 
+        //Initialization of onScrollListener
         recyclerViewGallery.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
