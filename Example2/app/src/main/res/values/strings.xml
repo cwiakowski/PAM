@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Example</string>
+    <string name="hint_enter_name">Enter Name</string>
+</resources>
