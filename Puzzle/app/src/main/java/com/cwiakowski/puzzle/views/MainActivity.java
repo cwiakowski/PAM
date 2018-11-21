@@ -74,8 +74,8 @@ public class MainActivity extends AppCompatActivity {
                 Bitmap pieceBitmap = Bitmap.createBitmap(croppedBitmap, xCoord, yCoord, pieceWidth, pieceHeight);
                 PuzzlePiece piece = new PuzzlePiece(getApplicationContext());
                 piece.setImageBitmap(pieceBitmap);
-                piece.xCoord = xCoord;
-                piece.yCoord = yCoord;
+                piece.xCoord = xCoord + imageView.getLeft();
+                piece.yCoord = yCoord + imageView.getTop();
                 piece.pieceWidth = pieceWidth;
                 piece.pieceHeight = pieceHeight;
                 pieces.add(piece);
