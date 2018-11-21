@@ -11,13 +11,14 @@ import android.widget.RelativeLayout;
 
 import com.cwiakowski.puzzle.R;
 import com.cwiakowski.puzzle.controllers.TouchListener;
+import com.cwiakowski.puzzle.entities.PuzzlePiece;
 
 import java.util.ArrayList;
 
 import static java.lang.Math.abs;
 
 public class MainActivity extends AppCompatActivity {
-    ArrayList<Bitmap> pieces;
+    ArrayList<PuzzlePiece> pieces;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,23 +33,21 @@ public class MainActivity extends AppCompatActivity {
             public void run() {
                 pieces = splitImage();
                 TouchListener touchListener = new TouchListener();
-                for(Bitmap piece: pieces) {
-                    ImageView iv = new ImageView(getApplicationContext());
-                    iv.setImageBitmap(piece);
-                    iv.setOnTouchListener(touchListener);
-                    layout.addView(iv);
+                for(PuzzlePiece piece : pieces) {
+                    piece.setOnTouchListener(touchListener);
+                    layout.addView(piece);
                 }
             }
         });
     }
 
-    private ArrayList<Bitmap> splitImage() {
+    private ArrayList<PuzzlePiece> splitImage() {
         int piecesNumber = 12;
         int rows = 4;
         int cols = 3;
 
         ImageView imageView = findViewById(R.id.imageView);
-        ArrayList<Bitmap> pieces = new ArrayList<>(piecesNumber);
+        ArrayList<PuzzlePiece> pieces = new ArrayList<>(piecesNumber);
 
         BitmapDrawable drawable = (BitmapDrawable) imageView.getDrawable();
         Bitmap bitmap = drawable.getBitmap();
@@ -59,8 +58,8 @@ public class MainActivity extends AppCompatActivity {
         int scaledBitmapWidth = dimensions[2];
         int scaledBitmapHeight = dimensions[3];
 
-        int croppedImageWidth = scaledBitmapWidth - 2*abs(scaledBitmapLeft);
-        int croppedImageHeight = scaledBitmapHeight - 2*abs(scaledBitmapTop);
+        int croppedImageWidth = scaledBitmapWidth - 2 * abs(scaledBitmapLeft);
+        int croppedImageHeight = scaledBitmapHeight - 2 * abs(scaledBitmapTop);
 
         Bitmap scaledBitmap = Bitmap.createScaledBitmap(bitmap, scaledBitmapWidth, scaledBitmapHeight, true);
         Bitmap croppedBitmap = Bitmap.createBitmap(scaledBitmap, abs(scaledBitmapLeft), abs(scaledBitmapTop), croppedImageWidth, croppedImageHeight);
@@ -68,20 +67,29 @@ public class MainActivity extends AppCompatActivity {
         int pieceWidth = croppedImageWidth/cols;
         int pieceHeight = croppedImageHeight/rows;
 
-        int yCord = 0;
+        int yCoord = 0;
         for (int row = 0; row < rows; row++) {
-            int xCord = 0;
+            int xCoord = 0;
             for (int col = 0; col < cols; col++) {
-                pieces.add(Bitmap.createBitmap(croppedBitmap, xCord, yCord, pieceWidth, pieceHeight));
-                xCord += pieceWidth;
+                Bitmap pieceBitmap = Bitmap.createBitmap(croppedBitmap, xCoord, yCoord, pieceWidth, pieceHeight);
+                PuzzlePiece piece = new PuzzlePiece(getApplicationContext());
+                piece.setImageBitmap(pieceBitmap);
+                piece.xCoord = xCoord;
+                piece.yCoord = yCoord;
+                piece.pieceWidth = pieceWidth;
+                piece.pieceHeight = pieceHeight;
+                pieces.add(piece);
+                xCoord += pieceWidth;
             }
-            yCord += pieceHeight;
+            yCoord += pieceHeight;
         }
+
         return pieces;
     }
 
     private int[] getBitmapPositionInsideImageView(ImageView imageView) {
         int[] ret = new int[4];
+
         if (imageView == null || imageView.getDrawable() == null)
             return ret;
 
@@ -105,11 +113,11 @@ public class MainActivity extends AppCompatActivity {
         int imgViewH = imageView.getHeight();
 
         int top = (int) (imgViewH - actH)/2;
-        int left = (int) (imgViewW - actW/2);
+        int left = (int) (imgViewW - actW)/2;
 
         ret[0] = left;
         ret[1] = top;
+
         return ret;
     }
-
 }
