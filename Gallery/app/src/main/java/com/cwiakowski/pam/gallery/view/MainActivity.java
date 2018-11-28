@@ -17,6 +17,7 @@ import com.cwiakowski.pam.gallery.adapters.GalleryAdapter;
 import com.cwiakowski.pam.gallery.R;
 import com.cwiakowski.pam.gallery.entity.GalleryItem;
 import com.cwiakowski.pam.gallery.utilities.GalleryUtils;
+import com.cwiakowski.pam.gallery.utilities.ScreenUtils;
 
 import java.util.List;
 
@@ -37,7 +38,7 @@ public class MainActivity extends AppCompatActivity implements GalleryAdapter.Ga
     //Returns offset from first visible picture
     private int offset(RecyclerView recyclerView) {
         int offset = recyclerView.computeVerticalScrollOffset();
-        offset = offset % 540;
+        offset = offset % findViewById(R.id.imageViewThumbnail).getHeight();
         return offset;
     }
 
@@ -51,7 +52,7 @@ public class MainActivity extends AppCompatActivity implements GalleryAdapter.Ga
         //Initialization of RecyclerView
         RecyclerView recyclerViewGallery = (RecyclerView) findViewById(R.id.recyclerViewGallery);
         //Initialization of Layout Manager
-        gridLayoutManager = new GridLayoutManager(this, 2);
+        gridLayoutManager = new GridLayoutManager(this, (ScreenUtils.getScreenWidth(this)/350));
         recyclerViewGallery.setLayoutManager(gridLayoutManager);
 
         //Initialization of GalleryAdapter
@@ -65,17 +66,20 @@ public class MainActivity extends AppCompatActivity implements GalleryAdapter.Ga
                 super.onScrollStateChanged(recyclerView, newState);
                 if (newState == 0) {
                     int offset = offset(recyclerView);
-                    if (offset < 270) {
+                    if (offset < findViewById(R.id.imageViewThumbnail).getHeight()/2) {
                         //Scroll up
                         recyclerView.smoothScrollBy(0, -offset);
                     }
                     else {
                         //Scroll down
-                        recyclerView.smoothScrollBy(0, 540-offset);
+                        recyclerView.smoothScrollBy(0, findViewById(R.id.imageViewThumbnail).getHeight()-offset);
                     }
                 }
             }
         });
+
+        Toast.makeText(this, Integer.toString(ScreenUtils.getScreenWidth(this)),
+                Toast.LENGTH_LONG).show();
 
         //Checking if app have permission to read storage data, optionally asking for permission
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
@@ -84,6 +88,8 @@ public class MainActivity extends AppCompatActivity implements GalleryAdapter.Ga
         } else {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, RC_READ_STORAGE);
         }
+
+
 
 
     }

@@ -55,6 +55,7 @@ public class SlideShowFragment extends DialogFragment {
             //ReadsData from MainActivity
             galleryItems = ((MainActivity) getActivity()).getGalleryItems();
         }
+        setRetainInstance(true);
 
     }
 
@@ -65,10 +66,6 @@ public class SlideShowFragment extends DialogFragment {
                              Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_slide_show, container, false);
 
-        //Setting up the toolbar
-        android.support.v7.widget.Toolbar toolbar = (Toolbar) view.findViewById(R.id.ToolBar);
-        toolbar.setTitle("Gallery");
-        toolbar.setTitleTextColor(Color.WHITE);
 
         mViewPagerGallery = view.findViewById(R.id.viewPagerGallery);
         //Initialization of SlideShowPagerAdapter
@@ -115,5 +112,10 @@ public class SlideShowFragment extends DialogFragment {
         return view;
     }
 
-
+    @Override
+    public void onDestroyView() {
+        if(getDialog() != null && getRetainInstance())
+            getDialog().setDismissMessage(null);
+        super.onDestroyView();
+    }
 }

@@ -50,12 +50,12 @@ public class GalleryAdapter extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         GalleryItem currentItem = galleryItems.get(position);
-        File imageViewThoumb = new File(currentItem.getImageUri());
+        File imageViewThumb = new File(currentItem.getImageUri());
         GalleryItemHolder galleryItemHolder = (GalleryItemHolder) holder;
         Picasso.get()
-                .load(imageViewThoumb)
+                .load(imageViewThumb)
                 .centerCrop()
-                .resize(ScreenUtils.getScreenWidth(context) / 2, ScreenUtils.getScreenHeight(context) / 3)
+                .resize(ScreenUtils.getScreenWidth(context)/(ScreenUtils.getScreenWidth(context)/350)+1, 400)
                 .into(galleryItemHolder.imageViewThumbnail);
         galleryItemHolder.imageViewThumbnail.setOnClickListener(new View.OnClickListener() {
             @Override
