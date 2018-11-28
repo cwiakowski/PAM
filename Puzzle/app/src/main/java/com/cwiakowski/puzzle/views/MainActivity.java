@@ -19,6 +19,7 @@ import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ImageView;
@@ -29,6 +30,7 @@ import com.cwiakowski.puzzle.R;
 import com.cwiakowski.puzzle.controllers.ImageAdapter;
 import com.cwiakowski.puzzle.controllers.TouchListener;
 import com.cwiakowski.puzzle.entities.PuzzlePiece;
+import com.cwiakowski.puzzle.utils.ScreenUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -50,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
             final String[] files  = am.list("img");
 
             GridView grid = findViewById(R.id.grid);
+            grid.setNumColumns(ScreenUtils.getScreenWidth(this)/358);
             grid.setAdapter(new ImageAdapter(this));
             grid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override

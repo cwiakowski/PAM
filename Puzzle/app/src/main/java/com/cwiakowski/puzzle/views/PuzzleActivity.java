@@ -2,6 +2,7 @@ package com.cwiakowski.puzzle.views;
 
 import android.content.Intent;
 import android.content.res.AssetManager;
+import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
@@ -20,6 +21,7 @@ import android.widget.Toast;
 import com.cwiakowski.puzzle.R;
 import com.cwiakowski.puzzle.controllers.TouchListener;
 import com.cwiakowski.puzzle.entities.PuzzlePiece;
+import com.cwiakowski.puzzle.utils.ScreenUtils;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -34,6 +36,8 @@ public class PuzzleActivity extends AppCompatActivity {
     String mCurrentPhotoPath;
     String mCurrentPhotoUri;
     boolean visible = false;
+    public static int imageViewH;
+    public static int imageViewW;
 
 
     @Override
@@ -41,6 +45,7 @@ public class PuzzleActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_puzzle);
         final ImageView imageView = findViewById(R.id.imageView);
+        imageView.setMaxHeight(ScreenUtils.getScreenHeight(this));
         final RelativeLayout layout = findViewById(R.id.layout);
         readPictureFromFile(imageView, layout);
         initImageView(imageView);
@@ -77,15 +82,26 @@ public class PuzzleActivity extends AppCompatActivity {
                 pieces = splitImage();
                 TouchListener touchListener = new TouchListener(PuzzleActivity.this);
                 Collections.shuffle(pieces);
+                int orientation = getResources().getConfiguration().orientation;
                 for (PuzzlePiece piece : pieces) {
                     piece.setOnTouchListener(touchListener);
                     layout.addView(piece);
                     RelativeLayout.LayoutParams lParams = (RelativeLayout.LayoutParams) piece.getLayoutParams();
-                    lParams.leftMargin = new Random().nextInt(layout.getWidth() - piece.width);
-                    piece.startingX = lParams.leftMargin;
-                    lParams.topMargin = layout.getHeight() - piece.height - new Random().nextInt(280);
-                    piece.startingY = lParams.topMargin;
-                    piece.setLayoutParams(lParams);
+                    if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                        lParams.leftMargin = imageViewW + new Random().nextInt((layout.getWidth() - piece.width - imageViewH)/10)*10;
+                        piece.startingX = lParams.leftMargin;
+                        lParams.topMargin = new Random().nextInt((layout.getHeight()-piece.height)/40)*40;
+                        piece.startingY = lParams.topMargin;
+                        piece.setLayoutParams(lParams);
+                    } else {
+                        lParams.leftMargin = new Random().nextInt(layout.getWidth() - piece.width);
+                        piece.startingX = lParams.leftMargin;
+                        lParams.topMargin = layout.getHeight() - piece.height - new Random().nextInt(260);
+                        piece.startingY = lParams.topMargin;
+                        piece.setLayoutParams(lParams);
+                    }
+
+
                 }
             }
         });
@@ -94,6 +110,8 @@ public class PuzzleActivity extends AppCompatActivity {
     private void setPicFromAsset(String assetName, ImageView imageView) {
         int targetW = imageView.getWidth();
         int targetH = imageView.getHeight();
+        imageViewH = targetH + imageView.getPaddingTop();
+        imageViewW = targetW + 30;
 
         AssetManager am = getAssets();
         try {
