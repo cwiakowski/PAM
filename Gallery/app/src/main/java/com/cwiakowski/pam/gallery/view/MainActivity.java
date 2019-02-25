@@ -30,19 +30,6 @@ public class MainActivity extends AppCompatActivity implements GalleryAdapter.Ga
     private GalleryAdapter mGalleryAdapter;
     private GridLayoutManager gridLayoutManager;
 
-
-    private void allignThumbnails() {
-        gridLayoutManager.getSpanCount();
-    }
-
-    //Returns offset from first visible picture
-    private int offset(RecyclerView recyclerView) {
-        int offset = recyclerView.computeVerticalScrollOffset();
-        offset = offset % findViewById(R.id.imageViewThumbnail).getHeight();
-        return offset;
-    }
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,46 +39,24 @@ public class MainActivity extends AppCompatActivity implements GalleryAdapter.Ga
         //Initialization of RecyclerView
         RecyclerView recyclerViewGallery = (RecyclerView) findViewById(R.id.recyclerViewGallery);
         //Initialization of Layout Manager
-        gridLayoutManager = new GridLayoutManager(this, (ScreenUtils.getScreenWidth(this)/350));
+        gridLayoutManager = new GridLayoutManager(this, (ScreenUtils.getScreenWidth(this)/540));
         recyclerViewGallery.setLayoutManager(gridLayoutManager);
 
         //Initialization of GalleryAdapter
         mGalleryAdapter = new GalleryAdapter(this);
         recyclerViewGallery.setAdapter(mGalleryAdapter);
 
-        //Initialization of onScrollListener
-        recyclerViewGallery.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-                if (newState == 0) {
-                    int offset = offset(recyclerView);
-                    if (offset < findViewById(R.id.imageViewThumbnail).getHeight()/2) {
-                        //Scroll up
-                        recyclerView.smoothScrollBy(0, -offset);
-                    }
-                    else {
-                        //Scroll down
-                        recyclerView.smoothScrollBy(0, findViewById(R.id.imageViewThumbnail).getHeight()-offset);
-                    }
-                }
-            }
-        });
+        checkForDataPermission();
 
-        Toast.makeText(this, Integer.toString(ScreenUtils.getScreenWidth(this)),
-                Toast.LENGTH_LONG).show();
+    }
 
-        //Checking if app have permission to read storage data, optionally asking for permission
+    private void checkForDataPermission() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
             galleryItems = GalleryUtils.getImages(this);
             mGalleryAdapter.addGalleryItems(galleryItems);
         } else {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, RC_READ_STORAGE);
         }
-
-
-
-
     }
 
     //Opens up a Fragment when thumbnail is clicked

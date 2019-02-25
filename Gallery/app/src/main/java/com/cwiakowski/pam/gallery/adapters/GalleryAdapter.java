@@ -19,7 +19,6 @@ import java.util.List;
 public class GalleryAdapter extends RecyclerView.Adapter {
     //List of pictures
     private List<GalleryItem> galleryItems;
-
     private Context context;
     //Allows for communication with MainActiivity
     private GalleryAdapterCallBacks mAdapterCallBacks;
@@ -55,7 +54,7 @@ public class GalleryAdapter extends RecyclerView.Adapter {
         Picasso.get()
                 .load(imageViewThumb)
                 .centerCrop()
-                .resize(ScreenUtils.getScreenWidth(context)/(ScreenUtils.getScreenWidth(context)/350)+1, 400)
+                .resize(ScreenUtils.getScreenWidth(context)/(ScreenUtils.getScreenWidth(context)/540)+1, 540)
                 .into(galleryItemHolder.imageViewThumbnail);
         galleryItemHolder.imageViewThumbnail.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,8 +64,6 @@ public class GalleryAdapter extends RecyclerView.Adapter {
         });
 
     }
-
-
 
     @Override
     public int getItemCount() {

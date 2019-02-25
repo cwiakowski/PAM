@@ -92,22 +92,6 @@ public class SlideShowFragment extends DialogFragment {
 
             }
         });
-        //Setting up buttons and its listeners
-        Button prev = (Button) view.findViewById(R.id.button2);
-        Button next = (Button) view.findViewById(R.id.button3);
-        prev.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mViewPagerGallery.setCurrentItem(mViewPagerGallery.getCurrentItem()-1);
-            }
-        });
-        next.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                mViewPagerGallery.setCurrentItem(mViewPagerGallery.getCurrentItem() +1);
-            }
-        });
 
         return view;
     }
